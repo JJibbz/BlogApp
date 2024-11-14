@@ -1,0 +1,55 @@
+﻿@model IEnumerable<BlogApp.Models.Role>
+
+@{
+    ViewData["Title"] = "Roles List";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (User.IsInRole("Administrator"))
+{
+    <div class="mb-3">
+        <a asp-controller="Role" asp-action="Create" class="btn btn-success">Add New Role</a>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            @foreach (var role in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@role.Name</h5>
+                            <p class="card-text">@role.Description</p>
+                            <a asp-controller="Role" asp-action="Details" asp-route-id="@role.RoleId" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@if (User.IsInRole("Moderator"))
+{
+
+    <div class="container">
+        <div class="row">
+            @foreach (var role in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@role.Name</h5>
+                            <p class="card-text">@role.Description</p>
+                            <a asp-controller="Role" asp-action="Details" asp-route-id="@role.RoleId" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+
+

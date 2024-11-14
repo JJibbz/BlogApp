@@ -1,0 +1,22 @@
+﻿@model BlogApp.Models.Tag
+
+@{
+    ViewData["Title"] = "Create Tag";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group pt-3">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<p class="pt-3">
+    <a asp-controller="Home" asp-action="Tags">Перейти к списку всех тегов</a>
+</p>

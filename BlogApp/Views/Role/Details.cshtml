@@ -1,0 +1,29 @@
+﻿@model BlogApp.Models.Role
+
+@{
+    ViewData["Title"] = "Role Details";
+}
+
+<h1>Role Details</h1>
+
+<div class="card">
+    <div class="card-header">@Model.Name</div>
+    <div class="card-text mx-3 my-2">@Model.Description</div>
+    <div class="card-footer">
+        @if (User.IsInRole("Administrator"))
+        {
+            <a asp-controller="Role" asp-action="Edit" asp-route-id="@Model.RoleId" class="btn btn-warning">Edit</a>
+            <form asp-controller="Role" asp-action="Delete" asp-route-id="@Model.RoleId" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        }
+        @if (User.IsInRole("Moderator"))
+        {
+            <a asp-controller="Role" asp-action="Edit" asp-route-id="@Model.RoleId" class="btn btn-warning">Edit</a>
+        }
+        <a asp-controller="Home" asp-action="Roles" class="btn btn-secondary">Back to List</a>
+    </div>
+
+</div>
+
+

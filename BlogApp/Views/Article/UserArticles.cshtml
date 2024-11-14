@@ -1,0 +1,54 @@
+﻿@model IEnumerable<BlogApp.Models.Article>
+
+@{
+    ViewData["Title"] = "My Articles";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="mb-3">
+    <a asp-controller="Article" asp-action="Create" class="btn btn-success">Add New Article</a>
+</div>
+
+<div class="container">
+    <div class="row">
+        @foreach (var article in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@article.Title</h5>
+                        <p><strong>Views:</strong> @article.ViewCount</p>
+                        <div>
+                            @if (article.Tags != null && article.Tags.Any())
+                            {
+                                @foreach (var tag in article.Tags)
+                                {
+                                    <span class="badge bg-secondary">@tag.Name</span>
+                                }
+                            }
+                            else
+                            {
+                                <span>No tags</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Article" asp-action="Details" asp-route-id="@article.ArticleId" class="btn btn-primary">View</a>
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                        {
+                            <a asp-controller="Article" asp-action="Edit" asp-route-id="@article.ArticleId" class="btn btn-warning">Edit</a>
+                        }
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <form asp-controller="Article" asp-action="DeleteConfirmed" asp-route-id="@article.ArticleId" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

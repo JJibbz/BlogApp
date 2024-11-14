@@ -1,0 +1,63 @@
+﻿@model IEnumerable<BlogApp.Models.Article>
+
+@{
+    ViewData["Title"] = "Articles";
+    var isAdmin = User.IsInRole("Administrator");
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (isAdmin)
+{
+    <h3>All Articles</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().Title)</th>
+                <th>@Html.DisplayNameFor(model => model.First().PublicationDate)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PublicationDate)</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.ArticleId">Details</a> |
+                        <a asp-action="Edit" asp-route-id="@item.ArticleId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ArticleId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h3>Your Articles</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().Title)</th>
+                <th>@Html.DisplayNameFor(model => model.First().PublicationDate)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PublicationDate)</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.ArticleId">Details</a> |
+                        <a asp-action="Edit" asp-route-id="@item.ArticleId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ArticleId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

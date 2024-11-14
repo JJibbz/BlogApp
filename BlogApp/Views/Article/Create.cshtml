@@ -1,0 +1,49 @@
+﻿@model BlogApp.Models.ArticleViewModel
+
+@{
+    ViewData["Title"] = "Create Article";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group pt-3">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group pt-3">
+        <label asp-for="Content" class="control-label"></label>
+        <textarea asp-for="Content" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label class="pt-3">Tags</label>
+        <div>
+            @foreach (var tag in Model.AvailableTags)
+            {
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" value="@tag.Id" name="SelectedTags" @(tag.IsSelected ? "checked" : "") />  <!-- Сохранение состояния чекбоксов -->
+                    <label class="form-check-label">@tag.Name</label>
+                </div>
+            }
+        </div>
+        <span asp-validation-for="SelectedTags" class="text-danger"></span>
+    </div>
+
+    <div class="form-group pt-3">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<div class="pt-3">
+    <a asp-controller="Home" asp-action="Articles" class="btn btn-warning">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

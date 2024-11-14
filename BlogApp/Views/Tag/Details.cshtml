@@ -1,0 +1,27 @@
+﻿@model BlogApp.Models.Tag
+
+@{
+    ViewData["Title"] = "Tag Details";
+}
+
+<h1>Tag Details</h1>
+
+<div class="card">
+    <div class="card-header">@Model.Name</div>
+    <div class="card-footer">
+
+        @if (User.IsInRole("Administrator"))
+        {
+            <a asp-controller="Tag" asp-action="Edit" asp-route-id="@Model.TagId" class="btn btn-warning">Edit</a>
+            <form asp-controller="Tag" asp-action="Delete" asp-route-id="@Model.TagId" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        }
+        @if (User.IsInRole("Moderator"))
+        {
+            <a asp-controller="Tag" asp-action="Edit" asp-route-id="@Model.TagId" class="btn btn-warning">Edit</a>
+        }
+        <a asp-controller="Home" asp-action="Tags" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+

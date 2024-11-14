@@ -1,0 +1,48 @@
+﻿@model BlogApp.Models.Article
+
+@{
+    ViewData["Title"] = "Article Details";
+}
+
+<h1 class="mb-3">@Model.Title</h1>
+<span class="badge bg-primary">Published: @Model.PublicationDate.ToString("yyyy, MMMM dd ")</span>
+<span class="badge bg-primary">Author: @Model.User?.Email</span>
+<div class="card py-2 my-3 px-2">
+    <p>@Model.Content</p>
+</div>
+
+
+
+
+@if (Model.Comments != null && Model.Comments.Any())
+{
+    <h3>Comments:</h3>
+    <div class="container pt-3">
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="row mb-2">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>@comment.User?.Email</strong>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">@comment.Content</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-controller="Comment" asp-action="Create" method="post">
+        <input type="hidden" name="articleId" value="@Model.ArticleId" />
+        <div class="form-group pt-3">
+            <textarea id="content" name="content" class="form-control" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Add comment</button>
+    </form>
+}

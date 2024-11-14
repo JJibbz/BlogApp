@@ -1,0 +1,42 @@
+﻿@model BlogApp.Models.User
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<h1>User Details</h1>
+
+<div>
+    <h2>@Model.FirstName @Model.LastName</h2>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Phone:</strong> @Model.Phone</p>
+    <p><strong>Registration Date:</strong> @Model.RegistrationDate.ToString("MMMM d, yyyy")</p>
+    <p><strong>Role:</strong> @(Model.Role != null ? Model.Role.Name : "No Role Assigned")</p>
+</div>
+
+<div>
+    <h3>Articles</h3>
+    <ul>
+        @foreach (var article in Model.Articles)
+        {
+            <li><a asp-controller="Article" asp-action="Details" asp-route-id="@article.ArticleId">@article.Title</a></li>
+        }
+    </ul>
+</div>
+
+
+<div class="mt-4">
+    @if (User.IsInRole("Administrator"))
+    {
+        <a asp-controller="User" asp-action="Edit" asp-route-id="@Model.UserId" class="btn btn-warning">Edit</a>
+        <form asp-controller="User" asp-action="Delete" asp-route-id="@Model.UserId" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    }
+    @if (User.IsInRole("Moderator"))
+    {
+        <a asp-controller="User" asp-action="Edit" asp-route-id="@Model.UserId" class="btn btn-warning">Edit</a>
+    }
+    <a asp-controller="Home" asp-action="Users" class="btn btn-secondary">Back to List</a>
+    
+</div>

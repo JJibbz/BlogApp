@@ -1,0 +1,30 @@
+﻿@model BlogApp.Models.Comment
+
+@{
+    ViewData["Title"] = "Edit Comment";
+}
+
+<h1>Edit Comment</h1>
+
+<div class="container">
+    <form asp-action="Edit">
+        <div class="form-group">
+            <label asp-for="Content" class="control-label"></label>
+            <textarea asp-for="Content" class="form-control"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span> <!-- Добавлено отображение ошибки для Content -->
+        </div>
+        <input type="hidden" asp-for="CommentId" />
+        <input type="hidden" asp-for="ArticleId" />
+        <input type="hidden" asp-for="UserId" />
+        <div class="form-group mt-2">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-controller="Home" asp-action="Comments" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
